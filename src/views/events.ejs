@@ -1,0 +1,41 @@
+<%- include('partials/header', { title: 'Events' }) %>
+
+<h1>Recent Events</h1>
+
+<div class="grid grid-4" style="margin-bottom:20px">
+  <% categoryCounts.forEach(row => { %>
+    <div class="card">
+      <div class="stat-value" style="font-size:24px"><%= row.count %></div>
+      <div class="stat-label"><%= row.category %></div>
+    </div>
+  <% }) %>
+</div>
+
+<div class="card" style="overflow-x:auto">
+  <table>
+    <tr>
+      <th>Time</th>
+      <th>Category</th>
+      <th>Title</th>
+      <th>Source</th>
+    </tr>
+    <% events.forEach(event => { %>
+      <tr>
+        <td class="text-sm text-muted" style="white-space:nowrap">
+          <%= new Date(event.timestamp).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) %>
+        </td>
+        <td>
+          <% const badgeClass = event.category === 'Race Result' ? 'badge-red' : event.category === 'Uncategorized' ? 'badge-gray' : 'badge-blue'; %>
+          <span class="badge <%= badgeClass %>"><%= event.category %></span>
+        </td>
+        <td class="truncate"><%= event.title %></td>
+        <td class="text-sm"><%= event.source %></td>
+      </tr>
+    <% }) %>
+    <% if (events.length === 0) { %>
+      <tr><td colspan="4" class="text-muted">No events found</td></tr>
+    <% } %>
+  </table>
+</div>
+
+<%- include('partials/footer') %>

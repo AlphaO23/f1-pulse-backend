@@ -1,0 +1,74 @@
+<%- include('partials/header', { title: 'Users' }) %>
+
+<h1>Users</h1>
+
+<div class="grid grid-4">
+  <div class="card">
+    <div class="stat-value"><%= totalUsers %></div>
+    <div class="stat-label">Total Users</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= onboarded %></div>
+    <div class="stat-label">Onboarded</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= withFcm %></div>
+    <div class="stat-label">Push Notifications Enabled</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= totalUsers > 0 ? ((withFcm / totalUsers) * 100).toFixed(0) : 0 %>%</div>
+    <div class="stat-label">Notification Opt-in Rate</div>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top:8px">
+  <div class="card">
+    <h2>Alert Sensitivity</h2>
+    <table>
+      <tr><th>Level</th><th>Count</th></tr>
+      <% sensitivityCounts.forEach(row => { %>
+        <tr>
+          <td><span class="badge badge-blue"><%= row.alert_sensitivity || 'not set' %></span></td>
+          <td><%= row.count %></td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+</div>
+
+<div class="card" style="margin-top:8px; overflow-x:auto">
+  <h2>Recent Users</h2>
+  <table>
+    <tr>
+      <th>Email</th>
+      <th>Team</th>
+      <th>Driver</th>
+      <th>Sensitivity</th>
+      <th>Onboarded</th>
+      <th>Joined</th>
+    </tr>
+    <% recentUsers.forEach(user => { %>
+      <tr>
+        <td class="text-sm"><%= user.email %></td>
+        <td class="text-sm"><%= user.favorite_team || '—' %></td>
+        <td class="text-sm"><%= user.favorite_driver || '—' %></td>
+        <td><span class="badge badge-blue"><%= user.alert_sensitivity || '—' %></span></td>
+        <td>
+          <% if (user.onboarded) { %>
+            <span class="badge badge-green">Yes</span>
+          <% } else { %>
+            <span class="badge badge-yellow">No</span>
+          <% } %>
+        </td>
+        <td class="text-sm text-muted">
+          <%= new Date(user.created_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) %>
+        </td>
+      </tr>
+    <% }) %>
+    <% if (recentUsers.length === 0) { %>
+      <tr><td colspan="6" class="text-muted">No users yet</td></tr>
+    <% } %>
+  </table>
+</div>
+
+<%- include('partials/footer') %>

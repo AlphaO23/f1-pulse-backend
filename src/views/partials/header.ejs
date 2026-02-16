@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F1 Pulse Admin — <%= title %></title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      min-height: 100vh;
+    }
+    nav {
+      background: #151515;
+      border-bottom: 1px solid #2a2a2a;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      height: 56px;
+    }
+    nav .brand {
+      font-weight: 800;
+      font-size: 18px;
+      color: #e10600;
+      letter-spacing: 2px;
+      margin-right: 32px;
+    }
+    nav a {
+      color: #888;
+      text-decoration: none;
+      padding: 16px 12px;
+      font-size: 14px;
+      font-weight: 500;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s;
+    }
+    nav a:hover, nav a.active {
+      color: #fff;
+      border-bottom-color: #e10600;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+    h1 { font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #fff; }
+    h2 { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: #ccc; }
+    .card {
+      background: #151515;
+      border: 1px solid #2a2a2a;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .grid { display: grid; gap: 16px; }
+    .grid-4 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+    .stat-value {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: #888;
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    th {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid #2a2a2a;
+      color: #888;
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    tr:hover { background: #1a1a1a; }
+    .badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-red { background: #e1060022; color: #e10600; }
+    .badge-green { background: #00c85322; color: #00c853; }
+    .badge-yellow { background: #ffc10722; color: #ffc107; }
+    .badge-blue { background: #2196f322; color: #2196f3; }
+    .badge-gray { background: #88888822; color: #888; }
+    .text-muted { color: #666; }
+    .text-sm { font-size: 13px; }
+    .truncate {
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .bar-container {
+      background: #1a1a1a;
+      border-radius: 4px;
+      height: 8px;
+      width: 100%;
+      margin-top: 4px;
+    }
+    .bar-fill {
+      background: #e10600;
+      height: 100%;
+      border-radius: 4px;
+      min-width: 2px;
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <span class="brand">F1 PULSE</span>
+    <a href="/admin/metrics" class="<%= title === 'Metrics' ? 'active' : '' %>">Metrics</a>
+    <a href="/admin/events" class="<%= title === 'Events' ? 'active' : '' %>">Events</a>
+    <a href="/admin/sources" class="<%= title === 'Sources' ? 'active' : '' %>">Sources</a>
+    <a href="/admin/users" class="<%= title === 'Users' ? 'active' : '' %>">Users</a>
+  </nav>
+  <div class="container">

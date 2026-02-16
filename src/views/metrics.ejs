@@ -1,0 +1,75 @@
+<%- include('partials/header', { title: 'Metrics' }) %>
+
+<h1>System Metrics</h1>
+
+<div class="grid grid-4">
+  <div class="card">
+    <div class="stat-value"><%= events24h %></div>
+    <div class="stat-label">Events (24h)</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= notifications24h %></div>
+    <div class="stat-label">Notifications (24h)</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= openRate %>%</div>
+    <div class="stat-label">Alert Open Rate</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= activeUsers %> <span style="font-size:16px;color:#888">/ <%= totalUsers %></span></div>
+    <div class="stat-label">Active / Total Users</div>
+  </div>
+</div>
+
+<div class="grid grid-4" style="margin-top:8px">
+  <div class="card">
+    <div class="stat-value"><%= totalEvents %></div>
+    <div class="stat-label">Total Events</div>
+  </div>
+  <div class="card">
+    <div class="stat-value"><%= healthyFeeds %> / <%= totalFeeds %></div>
+    <div class="stat-label">Healthy RSS Feeds</div>
+  </div>
+</div>
+
+<div class="grid grid-2" style="margin-top:16px">
+  <div class="card">
+    <h2>Events per Hour (24h)</h2>
+    <table>
+      <tr><th>Hour</th><th>Count</th><th></th></tr>
+      <% eventsPerHour.forEach(row => { %>
+        <% const maxCount = Math.max(...eventsPerHour.map(r => parseInt(r.count, 10)), 1); %>
+        <tr>
+          <td class="text-sm"><%= new Date(row.hour).toLocaleString('en-US', { month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' }) %></td>
+          <td><%= row.count %></td>
+          <td style="width:50%">
+            <div class="bar-container">
+              <div class="bar-fill" style="width:<%= (parseInt(row.count,10) / maxCount * 100) %>%"></div>
+            </div>
+          </td>
+        </tr>
+      <% }) %>
+      <% if (eventsPerHour.length === 0) { %>
+        <tr><td colspan="3" class="text-muted">No events in last 24h</td></tr>
+      <% } %>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Top Categories (24h)</h2>
+    <table>
+      <tr><th>Category</th><th>Count</th></tr>
+      <% topCategories.forEach(row => { %>
+        <tr>
+          <td><span class="badge badge-blue"><%= row.category %></span></td>
+          <td><%= row.count %></td>
+        </tr>
+      <% }) %>
+      <% if (topCategories.length === 0) { %>
+        <tr><td colspan="2" class="text-muted">No events in last 24h</td></tr>
+      <% } %>
+    </table>
+  </div>
+</div>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,16 @@
+# ---------------------------------------------------------------------------
+# Railway deployment configuration
+# https://docs.railway.com/reference/config-as-code
+# ---------------------------------------------------------------------------
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "node src/index.js"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 10
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 5
+numReplicas = 1

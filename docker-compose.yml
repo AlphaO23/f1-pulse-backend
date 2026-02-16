@@ -1,0 +1,66 @@
+# ---------------------------------------------------------------------------
+# F1Pulse — local development stack
+# ---------------------------------------------------------------------------
+services:
+  # -------------------------------------------------------------------------
+  # Node.js API
+  # -------------------------------------------------------------------------
+  app:
+    build: .
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://f1pulse:f1pulse_secret@postgres:5432/f1pulse
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+    volumes:
+      - app-logs:/app/logs
+
+  # -------------------------------------------------------------------------
+  # PostgreSQL
+  # -------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: f1pulse
+      POSTGRES_USER: f1pulse
+      POSTGRES_PASSWORD: f1pulse_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U f1pulse -d f1pulse"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # -------------------------------------------------------------------------
+  # Redis (for job queues)
+  # -------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 128mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  pg-data:
+  redis-data:
+  app-logs:

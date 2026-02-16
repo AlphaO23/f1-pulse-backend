@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(node -e:*)",
+      "Bash(npm run migrate:*)",
+      "Bash(npm start)",
+      "Bash(npx create-expo-app@latest mobile --template blank)"
+    ]
+  }
+}
