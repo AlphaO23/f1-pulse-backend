@@ -120,38 +120,42 @@ async function ingestFeeds() {
     let feedSkipped = 0;
 
     for (const item of items) {
-      // Deduplicate by checking if an event with the same source + title already exists
-      const existing = await db('events')
-        .where({ source: item.source, title: item.title })
-        .first();
-
-      if (existing) {
-        feedSkipped++;
-        continue;
-      }
-
-      const category = categorize(item.title, item.content);
-
-      const [event] = await db('events')
-        .insert({
-          title: item.title,
-          category,
-          timestamp: item.pubDate,
-          source: item.source,
-          link: item.link || null,
-          summary: item.content.substring(0, 500),
-          raw_content: item.content,
-        })
-        .returning('*');
-
-      feedNew++;
-      logger.info('New event ingested', { category, title: item.title, source: item.source });
-
-      // Broadcast push notification for this new event
       try {
-        await broadcastEvent(event);
+        // Deduplicate by checking if an event with the same source + title already exists
+        const existing = await db('events')
+          .where({ source: item.source, title: item.title })
+          .first();
+
+        if (existing) {
+          feedSkipped++;
+          continue;
+        }
+
+        const category = categorize(item.title, item.content);
+
+        const [event] = await db('events')
+          .insert({
+            title: item.title,
+            category,
+            timestamp: item.pubDate,
+            source: item.source,
+            link: item.link || null,
+            summary: item.content.substring(0, 500),
+            raw_content: item.content,
+          })
+          .returning('*');
+
+        feedNew++;
+        logger.info('New event ingested', { category, title: item.title, source: item.source });
+
+        // Broadcast push notification for this new event
+        try {
+          await broadcastEvent(event);
+        } catch (err) {
+          logger.error('Failed to broadcast event', { title: item.title, error: err.message });
+        }
       } catch (err) {
-        logger.error('Failed to broadcast event', { title: item.title, error: err.message });
+        logger.warn('Failed to process RSS item — skipping', { title: item.title, source: item.source, error: err.message });
       }
     }
 
@@ -180,16 +184,22 @@ async function ingestFeeds() {
 // Scheduling — uses node-cron instead of setInterval
 // ---------------------------------------------------------------------------
 function startPolling() {
+  const activeFeeds = RSS_FEEDS.filter((f) => f.enabled);
+  if (activeFeeds.length === 0) {
+    logger.warn('No RSS feeds configured — polling disabled');
+    return;
+  }
+
   const schedule = config.rss.cronSchedule;
 
   // Run immediately on start
-  ingestFeeds().catch((err) => logger.error('Initial ingestion failed', { error: err.message }));
+  ingestFeeds().catch((err) => logger.warn('Initial ingestion failed — will retry on next cycle', { error: err.message }));
 
   cronJob = cron.schedule(schedule, () => {
-    ingestFeeds().catch((err) => logger.error('Ingestion cycle failed', { error: err.message }));
+    ingestFeeds().catch((err) => logger.warn('Ingestion cycle failed — will retry on next cycle', { error: err.message }));
   });
 
-  logger.info('RSS polling started', { cron: schedule });
+  logger.info('RSS polling started', { cron: schedule, feeds: activeFeeds.length });
 }
 
 function stopPolling() {
