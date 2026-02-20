@@ -9,7 +9,7 @@ dockerfilePath = "Dockerfile"
 
 [deploy]
 startCommand = "node src/index.js"
-healthcheckPath = "/api/health"
+healthcheckPath = "/health"
 healthcheckTimeout = 10
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 5

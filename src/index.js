@@ -106,7 +106,12 @@ app.use('/admin', adminAuth, adminRouter);
 // Public routes (no auth required)
 // ---------------------------------------------------------------------------
 
-// Health check (exempt from rate limiting for uptime monitors)
+// Simple liveness probe — no dependencies, always returns 200
+app.get('/health', (_req, res) => {
+  res.status(200).send('OK');
+});
+
+// Detailed health check — reports service status (exempt from rate limiting)
 app.get('/api/health', async (_req, res) => {
   try {
     await db.raw('SELECT 1');

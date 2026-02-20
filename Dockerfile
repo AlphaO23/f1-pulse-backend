@@ -44,8 +44,8 @@ USER f1pulse
 
 EXPOSE 3000
 
-# Health check — matches the existing /api/health endpoint
+# Health check — lightweight liveness probe, no DB dependency
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:3000/api/health || exit 1
+  CMD wget -qO- http://localhost:3000/health || exit 1
 
 CMD ["node", "src/index.js"]
