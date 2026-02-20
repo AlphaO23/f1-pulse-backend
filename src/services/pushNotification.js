@@ -26,11 +26,15 @@ function initFirebase() {
     return;
   }
 
-  admin.initializeApp({
-    credential: admin.credential.cert(require(require('path').resolve(credPath))),
-  });
-  firebaseInitialized = true;
-  logger.info('Firebase Admin SDK initialized');
+  try {
+    admin.initializeApp({
+      credential: admin.credential.cert(require(require('path').resolve(credPath))),
+    });
+    firebaseInitialized = true;
+    logger.info('Firebase Admin SDK initialized');
+  } catch (err) {
+    logger.warn('Firebase initialization failed — push notifications disabled', { error: err.message });
+  }
 }
 
 // ---------------------------------------------------------------------------
