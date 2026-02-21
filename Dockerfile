@@ -42,10 +42,11 @@ RUN chown -R f1pulse:f1pulse /app
 
 USER f1pulse
 
-EXPOSE 3000
+EXPOSE ${PORT:-3000}
 
-# Health check — lightweight liveness probe, no DB dependency
+# Health check — lightweight liveness probe, no DB dependency.
+# Uses the PORT env var that Railway injects at runtime (defaults to 3000).
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:3000/health || exit 1
+  CMD wget -qO- http://localhost:${PORT:-3000}/health || exit 1
 
 CMD ["node", "src/index.js"]

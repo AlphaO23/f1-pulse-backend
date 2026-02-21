@@ -86,7 +86,18 @@ const authLimiter = rateLimit({
 });
 
 // ---------------------------------------------------------------------------
-// HTTPS redirect — in production, reject plain HTTP behind the proxy
+// Public routes (no auth required)
+// ---------------------------------------------------------------------------
+
+// Simple liveness probe — registered BEFORE HTTPS redirect so Railway's
+// internal healthcheck (plain HTTP) always gets a 200 response.
+app.get('/health', (_req, res) => {
+  res.status(200).send('OK');
+});
+
+// ---------------------------------------------------------------------------
+// HTTPS redirect — in production, redirect plain HTTP to HTTPS.
+// Must come AFTER /health so the healthcheck probe isn't redirected.
 // ---------------------------------------------------------------------------
 if (isProduction) {
   app.use((req, res, next) => {
@@ -101,15 +112,6 @@ if (isProduction) {
 // Admin dashboard (Basic auth, server-rendered EJS)
 // ---------------------------------------------------------------------------
 app.use('/admin', adminAuth, adminRouter);
-
-// ---------------------------------------------------------------------------
-// Public routes (no auth required)
-// ---------------------------------------------------------------------------
-
-// Simple liveness probe — no dependencies, always returns 200
-app.get('/health', (_req, res) => {
-  res.status(200).send('OK');
-});
 
 // Detailed health check — reports service status (exempt from rate limiting)
 app.get('/api/health', async (_req, res) => {
