@@ -5,7 +5,7 @@
 // titles are more signal-dense than body text. The category with the highest
 // total score wins, and the score is normalized to a 0-100 confidence value.
 // If the best confidence is below CONFIDENCE_THRESHOLD the event is marked
-// "Uncategorized".
+// "Interesting".
 // ---------------------------------------------------------------------------
 
 const CONFIDENCE_THRESHOLD = 30;
@@ -223,7 +223,7 @@ function categorizeWithScore(title, content = '') {
   }
 
   // Find the winning category
-  let bestCategory = 'Uncategorized';
+  let bestCategory = 'Interesting';
   let bestScore = 0;
 
   for (const [category, score] of Object.entries(scores)) {
@@ -238,7 +238,7 @@ function categorizeWithScore(title, content = '') {
   const confidence = Math.min(100, Math.round((bestScore / maxScore) * 100));
 
   if (confidence < CONFIDENCE_THRESHOLD) {
-    return { category: 'Uncategorized', confidence, scores };
+    return { category: 'Interesting', confidence, scores };
   }
 
   return { category: bestCategory, confidence, scores };

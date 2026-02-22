@@ -12,7 +12,7 @@ const CATEGORY_COLORS = {
   'team news': '#34D399',
   'technical update': '#A78BFA',
   'official statement': '#FBBF24',
-  'uncategorized': '#9CA3AF',
+  'interesting': '#9CA3AF',
 };
 
 // ---------------------------------------------------------------------------

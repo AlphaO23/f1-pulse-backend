@@ -40,9 +40,9 @@ describe('eventCategorizer', () => {
       expect(result.confidence).toBeGreaterThanOrEqual(CONFIDENCE_THRESHOLD);
     });
 
-    test('low-confidence match returns Uncategorized', () => {
+    test('low-confidence match returns Interesting', () => {
       const result = categorizeWithScore('Weather forecast for tomorrow');
-      expect(result.category).toBe('Uncategorized');
+      expect(result.category).toBe('Interesting');
       expect(result.confidence).toBeLessThan(CONFIDENCE_THRESHOLD);
     });
 
@@ -86,18 +86,18 @@ describe('eventCategorizer', () => {
   // Edge cases
   // -------------------------------------------------------------------
   describe('edge cases', () => {
-    test('empty strings return Uncategorized', () => {
-      expect(categorize('', '')).toBe('Uncategorized');
+    test('empty strings return Interesting', () => {
+      expect(categorize('', '')).toBe('Interesting');
     });
 
     test('empty title with empty content', () => {
       const result = categorizeWithScore('', '');
-      expect(result.category).toBe('Uncategorized');
+      expect(result.category).toBe('Interesting');
       expect(result.confidence).toBe(0);
     });
 
-    test('no matching keywords returns Uncategorized', () => {
-      expect(categorize('The quick brown fox jumps over the lazy dog')).toBe('Uncategorized');
+    test('no matching keywords returns Interesting', () => {
+      expect(categorize('The quick brown fox jumps over the lazy dog')).toBe('Interesting');
     });
 
     test('content-only match still categorizes if strong enough', () => {

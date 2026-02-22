@@ -23,7 +23,7 @@ jest.mock('../../src/db/connection', () => {
 });
 
 jest.mock('../../src/services/eventCategorizer', () => ({
-  categorize: jest.fn(() => 'Uncategorized'),
+  categorize: jest.fn(() => 'Interesting'),
 }));
 
 jest.mock('../../src/services/pushNotification', () => ({
@@ -77,7 +77,7 @@ describe('rssIngestion — fetchFeed edge cases', () => {
       });
 
       mockDbChain.first.mockResolvedValue(null); // no existing event
-      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Untitled', category: 'Uncategorized', source: 'Formula 1' }]);
+      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Untitled', category: 'Interesting', source: 'Formula 1' }]);
 
       await rssModule.ingestFeeds();
 
@@ -92,7 +92,7 @@ describe('rssIngestion — fetchFeed edge cases', () => {
       });
 
       mockDbChain.first.mockResolvedValue(null);
-      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Uncategorized', source: 'Formula 1' }]);
+      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Interesting', source: 'Formula 1' }]);
 
       await rssModule.ingestFeeds();
 
@@ -111,7 +111,7 @@ describe('rssIngestion — fetchFeed edge cases', () => {
       });
 
       mockDbChain.first.mockResolvedValue(null);
-      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Uncategorized', source: 'Formula 1' }]);
+      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Interesting', source: 'Formula 1' }]);
 
       await rssModule.ingestFeeds();
 
@@ -128,7 +128,7 @@ describe('rssIngestion — fetchFeed edge cases', () => {
       });
 
       mockDbChain.first.mockResolvedValue(null);
-      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Uncategorized', source: 'Formula 1' }]);
+      mockDbChain.returning.mockResolvedValue([{ id: '1', title: 'Test', category: 'Interesting', source: 'Formula 1' }]);
 
       await rssModule.ingestFeeds();
 
