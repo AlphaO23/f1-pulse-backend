@@ -26,8 +26,8 @@ const RSS_FEEDS = [
   { name: 'Autosport', url: 'https://www.autosport.com/rss/feed/f1', enabled: true },
   { name: 'Motorsport.com', url: 'https://www.motorsport.com/rss/f1/news/', enabled: true },
   { name: 'RaceFans', url: 'https://www.racefans.net/feed/', enabled: true },
-  { name: 'PlanetF1', url: 'https://www.planetf1.com/feed/', enabled: true },
-  { name: 'The Race', url: 'https://the-race.com/feed/', enabled: true },
+  { name: 'Crash.net', url: 'https://www.crash.net/rss/f1', enabled: true },
+  { name: 'The Race', url: 'https://www.the-race.com/feed/', enabled: true },
   { name: 'GPFans', url: 'https://www.gpfans.com/en/rss.xml', enabled: true },
 ];
 

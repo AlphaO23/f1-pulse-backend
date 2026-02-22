@@ -149,11 +149,15 @@ app.get('/api/metrics', async (_req, res) => {
 app.use('/api/auth', authLimiter, authRouter);
 
 // ---------------------------------------------------------------------------
+// Public routes (no JWT required) — feed & categories readable by anyone
+// ---------------------------------------------------------------------------
+app.use('/api/feed', publicLimiter, feedRouter);
+app.use('/api/categories', publicLimiter, categoriesRouter);
+
+// ---------------------------------------------------------------------------
 // Protected routes (JWT required) — general rate limit
 // ---------------------------------------------------------------------------
-app.use('/api/feed', publicLimiter, authenticate, feedRouter);
 app.use('/api/events', publicLimiter, authenticate, eventsRouter);
-app.use('/api/categories', publicLimiter, authenticate, categoriesRouter);
 app.use('/api/users', publicLimiter, authenticate, usersRouter);
 app.use('/api', publicLimiter, authenticate, notificationsRouter);
 app.use('/api/notifications', publicLimiter, authenticate, notificationsRouter);
