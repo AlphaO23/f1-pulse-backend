@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
     const offset = (pageNum - 1) * limitNum;
 
     let query = db('events')
-      .select('id', 'title', 'category', 'timestamp', 'source', 'summary')
+      .select('id', 'title', 'category', 'timestamp', 'source', 'summary', 'link', 'image_url')
       .orderBy('timestamp', 'desc');
 
     let countQuery = db('events');

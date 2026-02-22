@@ -12,7 +12,41 @@ const parser = new Parser({
   headers: {
     'User-Agent': 'F1Pulse/1.0',
   },
+  customFields: {
+    item: [['media:content', 'mediaContent', { keepArray: true }]],
+  },
 });
+
+// ---------------------------------------------------------------------------
+// Extract the best image URL from an RSS item
+// ---------------------------------------------------------------------------
+function extractImageUrl(item) {
+  // 1. enclosure (Autosport, Motorsport.com, Crash.net, GPFans)
+  if (item.enclosure && item.enclosure.url && /image/i.test(item.enclosure.type || '')) {
+    return item.enclosure.url;
+  }
+  // Also check enclosure without type (some feeds omit it)
+  if (item.enclosure && item.enclosure.url && /\.(jpe?g|png|webp|gif)/i.test(item.enclosure.url)) {
+    return item.enclosure.url;
+  }
+
+  // 2. media:content (The Race, some others)
+  if (item.mediaContent && Array.isArray(item.mediaContent)) {
+    for (const mc of item.mediaContent) {
+      const url = mc.$ && mc.$.url;
+      if (url) return url;
+    }
+  }
+
+  // 3. First <img> tag in content or content:encoded
+  const html = item['content:encoded'] || item.content || '';
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (imgMatch && imgMatch[1]) {
+    return imgMatch[1];
+  }
+
+  return null;
+}
 
 // ---------------------------------------------------------------------------
 // Configurable feed list — add, remove, or disable feeds here
@@ -73,6 +107,7 @@ async function fetchFeed(feed) {
       pubDate: item.pubDate ? new Date(item.pubDate) : new Date(),
       content: item.contentSnippet || item.content || '',
       source: feed.name,
+      image_url: extractImageUrl(item),
     }));
   } catch (err) {
     const stats = feedStats[feed.name];
@@ -140,6 +175,7 @@ async function ingestFeeds() {
             timestamp: item.pubDate,
             source: item.source,
             link: item.link || null,
+            image_url: item.image_url || null,
             summary: item.content.substring(0, 500),
             raw_content: item.content,
           })
