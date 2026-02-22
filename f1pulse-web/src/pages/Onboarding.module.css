@@ -1,0 +1,131 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding: var(--sp-xl) var(--sp-md);
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: var(--sp-xs);
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: var(--sp-xl);
+}
+
+.error {
+  color: var(--error);
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: var(--sp-md);
+}
+
+.section {
+  margin-bottom: var(--sp-lg);
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: var(--sp-sm);
+  color: var(--text-primary);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-sm);
+}
+
+.chip {
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  background: var(--surface);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.15s;
+}
+
+.chip:hover {
+  border-color: var(--text-muted);
+}
+
+.selected {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-sm);
+}
+
+.option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--sp-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: all 0.15s;
+  text-align: left;
+}
+
+.option:hover {
+  border-color: var(--text-muted);
+}
+
+.optionActive {
+  border-color: var(--primary);
+  background: rgba(20, 184, 166, 0.12);
+}
+
+.optionLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.optionDesc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.btn {
+  width: 100%;
+  padding: 14px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  margin-top: var(--sp-md);
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: var(--primary-dark);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

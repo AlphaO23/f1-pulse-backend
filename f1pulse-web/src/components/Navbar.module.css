@@ -1,0 +1,61 @@
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-sm) var(--sp-md);
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-md);
+}
+
+.link,
+.active {
+  font-size: 14px;
+  font-weight: 500;
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s, background 0.15s;
+  color: var(--text-secondary);
+}
+
+.link:hover {
+  color: var(--text-primary);
+}
+
+.active {
+  color: var(--primary);
+  background: rgba(20, 184, 166, 0.15);
+}
+
+.logout {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-muted);
+  padding: var(--sp-xs) var(--sp-sm);
+  border-radius: var(--radius-sm);
+  transition: color 0.15s;
+}
+
+.logout:hover {
+  color: var(--error);
+}
