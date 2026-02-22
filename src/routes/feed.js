@@ -19,9 +19,17 @@ router.get('/', async (req, res, next) => {
 
     let query = db('events')
       .select('id', 'title', 'category', 'timestamp', 'source', 'summary', 'link', 'image_url')
+      .whereNotNull('image_url')
+      .where('image_url', '!=', '')
+      .whereNotNull('link')
+      .where('link', '!=', '')
       .orderBy('timestamp', 'desc');
 
-    let countQuery = db('events');
+    let countQuery = db('events')
+      .whereNotNull('image_url')
+      .where('image_url', '!=', '')
+      .whereNotNull('link')
+      .where('link', '!=', '');
 
     if (category) {
       query = query.where('category', category);
