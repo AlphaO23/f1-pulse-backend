@@ -24,7 +24,7 @@ body::before {
   left: -20px;
   right: -20px;
   bottom: -20px;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   background:
     repeating-conic-gradient(#2D3748 0% 25%, transparent 0% 50%)
@@ -44,6 +44,7 @@ body::before {
 
 #root {
   position: relative;
+  z-index: 1;
 }
 
 a {

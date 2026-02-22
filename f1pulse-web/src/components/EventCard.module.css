@@ -1,8 +1,7 @@
 .card {
   display: flex;
   gap: var(--sp-md);
-  background: rgba(75, 85, 99, 0.85);
-  backdrop-filter: blur(4px);
+  background: #4B5563;
   border-radius: var(--radius-md);
   border: 1px solid var(--border);
   overflow: hidden;
