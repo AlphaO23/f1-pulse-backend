@@ -10,7 +10,7 @@ const { rssFetchErrors, lastIngestionTimestamp } = require('../lib/metrics');
 const parser = new Parser({
   timeout: 10000,
   headers: {
-    'User-Agent': 'F1Pulse/1.0',
+    'User-Agent': 'FormulaPulse/1.0',
   },
   customFields: {
     item: [['media:content', 'mediaContent', { keepArray: true }]],

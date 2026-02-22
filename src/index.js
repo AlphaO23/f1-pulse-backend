@@ -183,7 +183,7 @@ function startDbHealthCheck() {
 
 // Start server
 app.listen(config.port, () => {
-  logger.info(`F1 Pulse API running on port ${config.port}`, { environment: config.nodeEnv });
+  logger.info(`Formula Pulse API running on port ${config.port}`, { environment: config.nodeEnv });
 
   if (isProduction) {
     logger.info('Production hardening active: HSTS, HTTPS redirect, rate limiting, CORS lock');

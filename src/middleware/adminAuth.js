@@ -4,7 +4,7 @@ function adminAuth(req, res, next) {
   const header = req.headers.authorization || '';
 
   if (!header.startsWith('Basic ')) {
-    res.set('WWW-Authenticate', 'Basic realm="F1 Pulse Admin"');
+    res.set('WWW-Authenticate', 'Basic realm="Formula Pulse Admin"');
     return res.status(401).send('Authentication required');
   }
 
@@ -15,7 +15,7 @@ function adminAuth(req, res, next) {
     return next();
   }
 
-  res.set('WWW-Authenticate', 'Basic realm="F1 Pulse Admin"');
+  res.set('WWW-Authenticate', 'Basic realm="Formula Pulse Admin"');
   return res.status(401).send('Invalid credentials');
 }
 

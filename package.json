@@ -1,7 +1,7 @@
 {
-  "name": "f1pulse",
+  "name": "formula-pulse",
   "version": "1.0.0",
-  "description": "F1 Pulse — real-time Formula 1 alert system",
+  "description": "Formula Pulse — real-time Formula 1 news platform",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js",

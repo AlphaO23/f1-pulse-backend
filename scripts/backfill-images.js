@@ -8,7 +8,7 @@ const db = require('../src/db/connection');
 
 const parser = new Parser({
   timeout: 15000,
-  headers: { 'User-Agent': 'F1Pulse/1.0' },
+  headers: { 'User-Agent': 'FormulaPulse/1.0' },
   customFields: {
     item: [['media:content', 'mediaContent', { keepArray: true }]],
   },
