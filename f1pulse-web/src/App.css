@@ -16,11 +16,14 @@ html, body, #root {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Animated checkered flag background */
+/* Animated checkered flag background — below header only */
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  top: 45px;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 0;
   pointer-events: none;
   background:
@@ -28,6 +31,7 @@ body::before {
     0 0 / 40px 40px;
   opacity: 0.35;
   animation: flag-wave 8s ease-in-out infinite;
+  transform-origin: top center;
 }
 
 @keyframes flag-wave {
