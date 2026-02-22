@@ -7,12 +7,12 @@
 }
 
 .inner {
-  max-width: 960px;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--sp-sm) var(--sp-md);
+  padding: var(--sp-sm) var(--sp-lg);
 }
 
 .logo {
@@ -20,12 +20,27 @@
   font-weight: 700;
   color: var(--primary);
   letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.countdown {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.timer {
+  color: var(--primary);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
 }
 
 .links {
   display: flex;
   align-items: center;
   gap: var(--sp-md);
+  flex-shrink: 0;
 }
 
 .link,
@@ -47,15 +62,13 @@
   background: rgba(20, 184, 166, 0.15);
 }
 
-.logout {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-muted);
-  padding: var(--sp-xs) var(--sp-sm);
-  border-radius: var(--radius-sm);
-  transition: color 0.15s;
-}
+/* Hide countdown on narrow screens, show logo + links */
+@media (max-width: 600px) {
+  .countdown {
+    display: none;
+  }
 
-.logout:hover {
-  color: var(--error);
+  .inner {
+    padding: var(--sp-sm) var(--sp-md);
+  }
 }
