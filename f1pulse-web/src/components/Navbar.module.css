@@ -4,6 +4,7 @@
   z-index: 100;
   background: var(--surface);
   border-bottom: 1px solid var(--border);
+  isolation: isolate;
 }
 
 .inner {

@@ -21,10 +21,10 @@ body::before {
   content: '';
   position: fixed;
   top: 45px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 0;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  z-index: 1;
   pointer-events: none;
   background:
     repeating-conic-gradient(#2D3748 0% 25%, transparent 0% 50%)
@@ -44,7 +44,6 @@ body::before {
 
 #root {
   position: relative;
-  z-index: 1;
 }
 
 a {
