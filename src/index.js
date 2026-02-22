@@ -153,11 +153,11 @@ app.use('/api/auth', authLimiter, authRouter);
 // ---------------------------------------------------------------------------
 app.use('/api/feed', publicLimiter, feedRouter);
 app.use('/api/categories', publicLimiter, categoriesRouter);
+app.use('/api/events', publicLimiter, eventsRouter);
 
 // ---------------------------------------------------------------------------
 // Protected routes (JWT required) — general rate limit
 // ---------------------------------------------------------------------------
-app.use('/api/events', publicLimiter, authenticate, eventsRouter);
 app.use('/api/users', publicLimiter, authenticate, usersRouter);
 app.use('/api', publicLimiter, authenticate, notificationsRouter);
 app.use('/api/notifications', publicLimiter, authenticate, notificationsRouter);
