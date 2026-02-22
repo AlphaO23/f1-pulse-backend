@@ -10,7 +10,7 @@ const CATEGORY_COLORS = {
   'race result': '#14B8A6',
   'qualifying': '#F59E0B',
   'practice & testing': '#60A5FA',
-  'driver transfer': '#818CF8',
+  'contracts': '#DC2626',
   'contract news': '#2DD4BF',
   'penalty': '#F87171',
   'team news': '#34D399',
@@ -81,7 +81,13 @@ export default function Article() {
 
         <article className={styles.article}>
           <div className={styles.meta}>
-            <span className={styles.badge} style={{ background: badgeColor }}>
+            <span
+              className={styles.badge}
+              style={cat === 'contracts'
+                ? { background: 'linear-gradient(135deg, #EF4444 0%, #DC2626 40%, #F87171 60%, #DC2626 100%)', boxShadow: '0 1px 3px rgba(220,38,38,0.4), inset 0 1px 0 rgba(255,255,255,0.25)', textShadow: '0 1px 1px rgba(0,0,0,0.2)' }
+                : { background: badgeColor }
+              }
+            >
               {event.category || 'General'}
             </span>
             <span className={styles.date}>{formatDate(event.timestamp)}</span>

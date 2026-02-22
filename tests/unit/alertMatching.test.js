@@ -143,7 +143,7 @@ describe('pushNotification', () => {
   // -------------------------------------------------------------------
   describe('exported constants', () => {
     test('BREAKING_CATEGORIES contains expected categories', () => {
-      expect(pushModule.BREAKING_CATEGORIES).toEqual(['Race Result', 'Penalty', 'Driver Transfer']);
+      expect(pushModule.BREAKING_CATEGORIES).toEqual(['Race Result', 'Penalty', 'Contracts']);
     });
 
     test('RATE_LIMIT_PER_HOUR is 10', () => {

@@ -13,8 +13,8 @@ describe('eventCategorizer', () => {
       expect(categorize('Hamilton given 10-second time penalty at Silverstone')).toBe('Penalty');
     });
 
-    test('identifies Driver Transfer from title', () => {
-      expect(categorize('Sainz signs with Williams and joins the new driver lineup')).toBe('Driver Transfer');
+    test('identifies Contracts from title', () => {
+      expect(categorize('Sainz signs with Williams and joins the new driver lineup')).toBe('Contracts');
     });
 
     test('identifies Contract News from title', () => {
@@ -106,11 +106,11 @@ describe('eventCategorizer', () => {
       expect(result.scores['Official Statement']).toBeGreaterThan(0);
     });
 
-    test('overlapping keywords: "contract" appears in both Driver Transfer and Contract News', () => {
+    test('overlapping keywords: "contract" appears in both Contracts and Contract News', () => {
       // "contract" alone shouldn't be enough for high confidence
       const result = categorizeWithScore('contract details revealed');
       // Both categories should have some score for "contract"
-      expect(result.scores['Driver Transfer']).toBeGreaterThan(0);
+      expect(result.scores['Contracts']).toBeGreaterThan(0);
       expect(result.scores['Contract News']).toBeGreaterThan(0);
     });
 

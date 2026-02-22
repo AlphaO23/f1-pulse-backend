@@ -10,7 +10,7 @@ const CATEGORY_SCORE = `
   CASE category
     WHEN 'Race Result'        THEN 50
     WHEN 'Penalty'            THEN 45
-    WHEN 'Driver Transfer'    THEN 40
+    WHEN 'Contracts'    THEN 40
     WHEN 'Contract News'      THEN 35
     WHEN 'Qualifying'         THEN 30
     WHEN 'Technical Update'   THEN 25

@@ -8,7 +8,7 @@ const { notificationsTotal } = require('../lib/metrics');
 let firebaseInitialized = false;
 
 // Categories that qualify for "breaking" sensitivity
-const BREAKING_CATEGORIES = ['Race Result', 'Penalty', 'Driver Transfer'];
+const BREAKING_CATEGORIES = ['Race Result', 'Penalty', 'Contracts'];
 
 // Rate-limit: max notifications per user per hour (non-race times)
 const RATE_LIMIT_PER_HOUR = 10;
@@ -170,7 +170,7 @@ async function sendToUser(userId, event) {
  * Matching logic (binary — no scoring):
  *   1. Sensitivity filter (DB-level):
  *      - "all"      → user receives every categorized event
- *      - "breaking"  → user only receives Race Result, Penalty, Driver Transfer
+ *      - "breaking"  → user only receives Race Result, Penalty, Contracts
  *   2. All matched users get the notification
  *   3. Rate limited to 10/hr per user outside race weekends (Fri-Sun unlimited)
  */

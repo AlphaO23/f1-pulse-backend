@@ -89,7 +89,7 @@ const CATEGORY_RULES = [
     ],
   },
   {
-    category: 'Driver Transfer',
+    category: 'Contracts',
     keywords: [
       { term: 'signs with', weight: 18 },
       { term: 'signs for', weight: 18 },

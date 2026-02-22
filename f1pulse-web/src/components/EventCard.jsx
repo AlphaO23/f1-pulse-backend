@@ -6,7 +6,7 @@ const CATEGORY_COLORS = {
   'race result': '#14B8A6',
   'qualifying': '#F59E0B',
   'practice & testing': '#60A5FA',
-  'driver transfer': '#818CF8',
+  'contracts': '#DC2626',
   'contract news': '#2DD4BF',
   'penalty': '#F87171',
   'team news': '#34D399',
@@ -348,7 +348,13 @@ export default function EventCard({ event, index = 0 }) {
       </div>
       <div className={styles.body}>
         <div className={styles.header}>
-          <span className={styles.badge} style={{ background: badgeColor }}>
+          <span
+            className={`${styles.badge} ${cat === 'contracts' ? styles.badgeGlossy : ''}`}
+            style={cat === 'contracts'
+              ? { background: `linear-gradient(135deg, #EF4444 0%, #DC2626 40%, #F87171 60%, #DC2626 100%)` }
+              : { background: badgeColor }
+            }
+          >
             {event.category || 'General'}
           </span>
           <span className={styles.time}>

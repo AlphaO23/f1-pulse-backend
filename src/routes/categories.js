@@ -7,7 +7,7 @@ const router = express.Router();
 const CATEGORY_ORDER = [
   'Race Result',
   'Penalty',
-  'Driver Transfer',
+  'Contracts',
   'Contract News',
   'Technical Update',
   'Team News',

@@ -84,7 +84,7 @@ exports.seed = async function (knex) {
       },
       {
         title: 'Sainz signs with Williams for 2026 season',
-        category: 'Driver Transfer',
+        category: 'Contracts',
         timestamp: ago(60),
         source: 'Autosport',
         link: 'https://www.autosport.com/f1/news/sainz-williams',
