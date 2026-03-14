@@ -13,7 +13,7 @@
 }
 
 .nav:hover {
-  width: 18vw;
+  width: 16vw;
 }
 
 .inner {
@@ -124,6 +124,6 @@
   }
 
   .nav:hover {
-    width: 18vw;
+    width: 16vw;
   }
 }
