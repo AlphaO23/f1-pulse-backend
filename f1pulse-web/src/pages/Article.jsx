@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import styles from './Article.module.css';
 
-const API = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://f1-pulse-backend-production.up.railway.app';
+const API = 'https://f1-pulse-backend-production.up.railway.app';
 
 const CATEGORY_COLORS = {
   'race result': '#14B8A6',

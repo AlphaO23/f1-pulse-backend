@@ -3,9 +3,7 @@ import EventCard from '../components/EventCard';
 import CategoryFilter from '../components/CategoryFilter';
 import styles from './Feed.module.css';
 
-const API = window.location.hostname === 'localhost'
-  ? 'http://localhost:3000'
-  : 'https://f1-pulse-backend-production.up.railway.app';
+const API = 'https://f1-pulse-backend-production.up.railway.app';
 
 export default function Feed() {
   const [events, setEvents] = useState([]);
