@@ -1,57 +1,80 @@
 .nav {
-  position: sticky;
+  position: fixed;
+  left: 0;
   top: 0;
+  bottom: 0;
+  width: 10vw;
   z-index: 100;
   background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   isolation: isolate;
+  transition: width 0.3s ease;
+  overflow: hidden;
+}
+
+.nav:hover {
+  width: 20vw;
 }
 
 .inner {
-  width: 100%;
-  margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--sp-md) 0;
   align-items: center;
-  justify-content: space-between;
-  padding: var(--sp-sm) var(--sp-lg);
-}
-
-.logo {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: 0.5px;
-  flex-shrink: 0;
-}
-
-.countdown {
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-
-.timer {
-  color: var(--primary);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
+  justify-content: flex-start;
+  gap: var(--sp-lg);
 }
 
 .links {
   display: flex;
-  align-items: center;
-  gap: var(--sp-md);
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--sp-sm);
   flex-shrink: 0;
+  padding: 0 var(--sp-sm);
+  width: 100%;
 }
 
 .link,
 .active {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-sm);
+  font-size: 13px;
   font-weight: 500;
-  padding: var(--sp-xs) var(--sp-sm);
+  padding: var(--sp-sm);
   border-radius: var(--radius-sm);
   transition: color 0.15s, background 0.15s;
   color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.nav:hover .link,
+.nav:hover .active {
+  justify-content: flex-start;
+}
+
+.icon {
+  width: 33px;
+  height: 33px;
+  flex-shrink: 0;
+}
+
+.linkText {
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  font-size: 15.6px;
+  color: #14B8A6;
+  transition: opacity 0.3s ease, max-width 0.3s ease;
+}
+
+.nav:hover .linkText {
+  opacity: 1;
+  max-width: 150px;
 }
 
 .link:hover {
@@ -63,13 +86,44 @@
   background: rgba(20, 184, 166, 0.15);
 }
 
-/* Hide countdown on narrow screens, show logo + links */
-@media (max-width: 600px) {
-  .countdown {
-    display: none;
+/* --- Countdown at bottom --- */
+.countdown {
+  margin-top: auto;
+  padding: var(--sp-xs) var(--sp-xs) var(--sp-md);
+  text-align: center;
+  white-space: nowrap;
+  width: 100%;
+  font-size: 11px;
+  font-weight: 600;
+  color: #14B8A6;
+  overflow: hidden;
+}
+
+/* Collapsed: show only the time value */
+.timerShort {
+  font-variant-numeric: tabular-nums;
+}
+
+.nav:hover .timerShort {
+  display: none;
+}
+
+/* Expanded: show "[GP Name] in [countdown]" */
+.timerFull {
+  display: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.nav:hover .timerFull {
+  display: inline;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    width: 10vw;
   }
 
-  .inner {
-    padding: var(--sp-sm) var(--sp-md);
+  .nav:hover {
+    width: 20vw;
   }
 }
