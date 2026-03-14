@@ -92,7 +92,7 @@ const authLimiter = rateLimit({
 // Simple liveness probe — registered BEFORE HTTPS redirect so Railway's
 // internal healthcheck (plain HTTP) always gets a 200 response.
 app.get('/health', (_req, res) => {
-  res.status(200).send('OK');
+  res.status(200).json({ status: 'ok' });
 });
 
 // ---------------------------------------------------------------------------
