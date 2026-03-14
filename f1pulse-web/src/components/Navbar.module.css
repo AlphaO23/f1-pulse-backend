@@ -3,7 +3,7 @@
   left: 0;
   top: 0;
   bottom: 0;
-  width: 10vw;
+  width: 9vw;
   z-index: 100;
   background: var(--surface);
   border-right: 1px solid var(--border);
@@ -120,7 +120,7 @@
 
 @media (max-width: 768px) {
   .nav {
-    width: 10vw;
+    width: 9vw;
   }
 
   .nav:hover {
