@@ -4,49 +4,6 @@ import { fetchSeasonData, fetchDriverSeasonCounts } from '../data/f1api';
 import { CHAMPIONS, WDC_COUNTS } from '../data/champions';
 import TEAM_COLORS, { getTeamColor } from '../data/teamColors';
 
-// 2025 F1 Season — verified static data (used as fallback)
-const STATIC_2025_RACE_LABELS = [
-  'AUS','CHN','JPN','BHR','SAU','MIA','EMI','MCO','ESP','CAN',
-  'AUT','GBR','BEL','HUN','NLD','ITA','AZE','SGP','USA','MEX',
-  'SAO','LAS','QAT','ABU',
-];
-
-const STATIC_2025_DRIVERS = [
-  { pos: 1,  name: 'Lando Norris',           team: 'McLaren',       abbr: 'NOR', num: 4,  driverId: 'norris',           seasons: 7,  pts: 423, results: [1,2,2,3,4,2,2,1,2,'DNF',1,1,2,1,'DNF',2,7,3,2,1,1,'DSQ',4,3] },
-  { pos: 2,  name: 'Max Verstappen',         team: 'Red Bull',      abbr: 'VER', num: 1,  driverId: 'max_verstappen',   seasons: 11, pts: 421, results: [2,4,1,6,2,4,1,4,10,2,'DNF',5,4,9,2,1,1,2,1,3,3,1,1,1] },
-  { pos: 3,  name: 'Oscar Piastri',          team: 'McLaren',       abbr: 'PIA', num: 81, driverId: 'piastri',          seasons: 3,  pts: 410, results: [9,1,3,1,1,1,3,3,1,4,2,2,1,2,1,3,'DNF',4,5,5,'DSQ',2,2,2] },
-  { pos: 4,  name: 'George Russell',         team: 'Mercedes',      abbr: 'RUS', num: 63, driverId: 'russell',          seasons: 7,  pts: 319, results: [3,3,5,2,5,3,7,11,4,1,5,10,5,3,4,5,2,1,6,7,4,3,6,5] },
-  { pos: 5,  name: 'Charles Leclerc',        team: 'Ferrari',       abbr: 'LEC', num: 16, driverId: 'leclerc',          seasons: 8,  pts: 242, results: [8,'DSQ',4,4,3,7,6,2,3,5,3,14,3,4,'DNF',4,9,6,3,2,'DNF',4,8,4] },
-  { pos: 6,  name: 'Lewis Hamilton',          team: 'Ferrari',       abbr: 'HAM', num: 44, driverId: 'hamilton',         seasons: 19, pts: 156, results: [10,'DSQ',7,5,7,8,4,5,6,6,4,4,7,12,'DNF',6,8,8,4,8,'DNF',8,12,8] },
-  { pos: 7,  name: 'Andrea Kimi Antonelli',   team: 'Mercedes',      abbr: 'ANT', num: 12, driverId: 'antonelli',        seasons: 1,  pts: 150, results: [4,6,6,11,6,6,'DNF',18,'DNF',3,'DNF','DNF',16,10,16,9,4,5,13,6,2,5,5,15] },
-  { pos: 8,  name: 'Alexander Albon',         team: 'Williams',      abbr: 'ALB', num: 23, driverId: 'albon',            seasons: 6,  pts: 73,  results: [5,7,9,12,9,5,5,9,'DNF','DNF','DNF',8,6,15,5,7,13,14,14,12,11,'DNF',11,16] },
-  { pos: 9,  name: 'Carlos Sainz',            team: 'Williams',      abbr: 'SAI', num: 55, driverId: 'sainz',            seasons: 11, pts: 64,  results: ['DNF',10,14,'DNF',8,9,8,10,14,10,'DNS',12,18,14,13,11,3,10,'DNF','DNF',13,5,3,13] },
-  { pos: 10, name: 'Fernando Alonso',         team: 'Aston Martin',  abbr: 'ALO', num: 14, driverId: 'alonso',           seasons: 22, pts: 56,  results: ['DNF','DNF',11,15,11,15,11,'DNF',9,7,7,9,17,5,8,'DNF',15,7,10,'DNF',14,11,7,6] },
-  { pos: 11, name: 'Nico Hülkenberg',         team: 'Sauber',        abbr: 'HUL', num: 27, driverId: 'hulkenberg',       seasons: 13, pts: 51,  results: [7,15,16,'DSQ',15,14,12,16,5,8,9,3,12,13,14,'DNS',16,20,8,'DNF',9,7,'DNF',9] },
-  { pos: 12, name: 'Isack Hadjar',            team: 'Racing Bulls',  abbr: 'HAD', num: 6,  driverId: 'hadjar',           seasons: 1,  pts: 51,  results: ['DNS',11,8,13,10,11,9,6,7,16,12,'DNF',20,11,3,10,10,11,16,13,8,6,18,17] },
-  { pos: 13, name: 'Oliver Bearman',          team: 'Haas',          abbr: 'BEA', num: 87, driverId: 'bearman',          seasons: 2,  pts: 41,  results: [14,8,10,10,13,'DNF',17,12,17,11,11,11,11,'DNF',6,12,12,9,9,4,6,10,'DNF',12] },
-  { pos: 14, name: 'Liam Lawson',             team: 'Racing Bulls',  abbr: 'LAW', num: 30, driverId: 'lawson',           seasons: 3,  pts: 38,  results: ['DNF',12,17,16,12,'DNF',14,8,11,'DNF',6,'DNF',8,8,12,14,5,15,11,'DNF',7,14,9,18] },
-  { pos: 15, name: 'Esteban Ocon',            team: 'Haas',          abbr: 'OCO', num: 31, driverId: 'ocon',             seasons: 10, pts: 38,  results: [13,5,18,8,14,12,'DNF',12,16,9,10,13,15,16,10,15,14,18,15,9,12,9,15,7] },
-  { pos: 16, name: 'Lance Stroll',            team: 'Aston Martin',  abbr: 'STR', num: 18, driverId: 'stroll',           seasons: 9,  pts: 33,  results: [6,9,20,17,16,16,15,15,'DNS',17,14,7,14,7,7,18,17,13,12,14,16,'DNF',17,10] },
-  { pos: 17, name: 'Yuki Tsunoda',            team: 'Racing Bulls',  abbr: 'TSU', num: 22, driverId: 'tsunoda',          seasons: 5,  pts: 33,  results: [12,16,12,9,'DNF',10,10,17,13,12,16,15,13,17,9,13,6,12,7,11,17,12,10,14] },
-  { pos: 18, name: 'Pierre Gasly',            team: 'Alpine',        abbr: 'GAS', num: 10, driverId: 'gasly',            seasons: 9,  pts: 22,  results: [11,'DSQ',13,7,'DNF',13,13,'DNF',8,15,13,6,10,19,17,16,18,19,19,15,10,13,16,19] },
-  { pos: 19, name: 'Gabriel Bortoleto',       team: 'Sauber',        abbr: 'BOR', num: 5,  driverId: 'bortoleto',        seasons: 1,  pts: 19,  results: ['DNF',14,19,18,18,'DNF',18,14,12,14,8,'DNF',9,6,15,8,11,17,18,10,'DNF','DNF',13,11] },
-  { pos: 20, name: 'Franco Colapinto',        team: 'Alpine',        abbr: 'COL', num: 43, driverId: 'colapinto',        seasons: 2,  pts: 0,   results: [null,null,null,null,null,null,16,13,15,13,15,'DNS',19,18,11,17,19,16,17,16,15,15,14,20] },
-  { pos: 21, name: 'Jack Doohan',             team: 'Alpine',        abbr: 'DOO', num: 7,  driverId: 'doohan',           seasons: 1,  pts: 0,   results: ['DNF',13,15,14,17,'DNF',null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null] },
-];
-
-const STATIC_2025_CONSTRUCTORS = [
-  { pos: 1,  name: 'McLaren',        pts: 833, drivers: [{ name: 'Lando Norris', pts: 423 }, { name: 'Oscar Piastri', pts: 410 }] },
-  { pos: 2,  name: 'Mercedes',       pts: 469, drivers: [{ name: 'George Russell', pts: 319 }, { name: 'Andrea Kimi Antonelli', pts: 150 }] },
-  { pos: 3,  name: 'Red Bull',       pts: 451, drivers: [{ name: 'Max Verstappen', pts: 421 }, { name: 'Yuki Tsunoda', pts: 30 }] },
-  { pos: 4,  name: 'Ferrari',        pts: 398, drivers: [{ name: 'Charles Leclerc', pts: 242 }, { name: 'Lewis Hamilton', pts: 156 }] },
-  { pos: 5,  name: 'Williams',       pts: 137, drivers: [{ name: 'Alexander Albon', pts: 73 }, { name: 'Carlos Sainz', pts: 64 }] },
-  { pos: 6,  name: 'Racing Bulls',   pts: 92,  drivers: [{ name: 'Isack Hadjar', pts: 51 }, { name: 'Liam Lawson', pts: 41 }] },
-  { pos: 7,  name: 'Aston Martin',   pts: 89,  drivers: [{ name: 'Fernando Alonso', pts: 56 }, { name: 'Lance Stroll', pts: 33 }] },
-  { pos: 8,  name: 'Haas',           pts: 79,  drivers: [{ name: 'Oliver Bearman', pts: 41 }, { name: 'Esteban Ocon', pts: 38 }] },
-  { pos: 9,  name: 'Sauber',         pts: 70,  drivers: [{ name: 'Nico Hülkenberg', pts: 51 }, { name: 'Gabriel Bortoleto', pts: 19 }] },
-  { pos: 10, name: 'Alpine',         pts: 22,  drivers: [{ name: 'Pierre Gasly', pts: 22 }, { name: 'Franco Colapinto', pts: 0 }] },
-];
 
 // 2026 pre-season lineup (all zeros, season not started)
 const LINEUP_2026 = [
@@ -176,23 +133,6 @@ export default function Standings() {
   }, []);
 
   useEffect(() => {
-    // 2025: use static verified data
-    if (year === 2025) {
-      setSeasonCache((prev) => {
-        if (prev[2025]) return prev;
-        return {
-          ...prev,
-          2025: {
-            drivers: STATIC_2025_DRIVERS,
-            constructors: STATIC_2025_CONSTRUCTORS,
-            raceLabels: STATIC_2025_RACE_LABELS,
-            rounds: 24,
-          },
-        };
-      });
-      return;
-    }
-
     // Already cached (non-current-year only — current year always re-fetches on refresh)
     if (seasonCache[year] && year !== currentYear) return;
     // For current year, skip if already cached and not refreshing
