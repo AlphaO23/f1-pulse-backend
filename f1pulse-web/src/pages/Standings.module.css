@@ -656,21 +656,6 @@
   font-weight: 600;
 }
 
-/* --- Custom wallpaper card (Max Verstappen 2023) --- */
-.cardWallpaper {
-  background-size: cover;
-  background-position: center;
-}
-
-/* Keep the race-results grid readable over the wallpaper */
-.cardWallpaper .expandedGrid {
-  background: rgba(55, 65, 81, 0.80);
-}
-
-.cardWallpaper .gridCell {
-  background: rgba(75, 85, 99, 0.80);
-}
-
 /* --- Close button on expanded cards --- */
 .closeBtn {
   position: absolute;

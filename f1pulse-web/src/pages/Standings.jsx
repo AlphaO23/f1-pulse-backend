@@ -347,14 +347,9 @@ export default function Standings() {
               const championYear = CHAMPIONS[year] === entry.driverId;
               const totalTitles = wdcCountUpTo(entry.driverId, year);
               const isExpanded = expanded === `d-${entry.name}`;
-              const hasWallpaper = year === 2023 && entry.name === 'Max Verstappen';
-              const wallpaperStyle = hasWallpaper ? {
-                backgroundImage: 'linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("/CardWallpaper/Max%20Verstappen/2023/mexico%20win.webp")',
-              } : {};
               return (
               <div
-                className={`${styles.card} ${isExpanded ? styles.cardExpanded : ''} ${hasWallpaper ? styles.cardWallpaper : ''}`}
-                style={wallpaperStyle}
+                className={`${styles.card} ${isExpanded ? styles.cardExpanded : ''}`}
                 key={entry.name}
                 onClick={() => toggleExpand(`d-${entry.name}`)}
               >
